@@ -1301,15 +1301,17 @@ schannel_connect_step2(struct Curl_cfilter *cf, struct Curl_easy *data)
           if(result || (outbuf[i].cbBuffer != written)) {
             failf(data, "schannel: failed to send next handshake data: "
                   "sent %zu of %lu bytes", written, outbuf[i].cbBuffer);
-            return CURLE_SSL_CONNECT_ERROR;
+            break;
           }
         }
-
-        /* free obsolete buffer */
-        if(outbuf[i].pvBuffer) {
-          Curl_pSecFn->FreeContextBuffer(outbuf[i].pvBuffer);
-        }
       }
+      for(i = 0; i < 3; i++) {
+        /* free obsolete buffer */
+        if(outbuf[i].pvBuffer)
+          Curl_pSecFn->FreeContextBuffer(outbuf[i].pvBuffer);
+      }
+      if(result)
+        return result;
     }
     else {
       char buffer[STRERROR_LEN];
