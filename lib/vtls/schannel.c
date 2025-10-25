@@ -1301,6 +1301,7 @@ schannel_connect_step2(struct Curl_cfilter *cf, struct Curl_easy *data)
           if(result || (outbuf[i].cbBuffer != written)) {
             failf(data, "schannel: failed to send next handshake data: "
                   "sent %zu of %lu bytes", written, outbuf[i].cbBuffer);
+            result  = CURLE_SSL_CONNECT_ERROR;
             break;
           }
         }
