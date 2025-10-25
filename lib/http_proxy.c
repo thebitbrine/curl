@@ -127,6 +127,9 @@ static CURLcode dynhds_add_custom(struct Curl_easy *data,
            * silently */
           continue;
       }
+      else
+        /* no name, move on */
+        continue;
 
       DEBUGASSERT(curlx_strlen(&name) && value);
       if(data->state.aptr.host &&
