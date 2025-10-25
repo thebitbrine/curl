@@ -1128,7 +1128,7 @@ schannel_connect_step2(struct Curl_cfilter *cf, struct Curl_easy *data)
   SecBuffer inbuf[2];
   SecBufferDesc inbuf_desc;
   SECURITY_STATUS sspi_status = SEC_E_OK;
-  CURLcode result;
+  CURLcode result = CURLE_OK;
   bool doread;
   const char *pubkey_ptr;
 
